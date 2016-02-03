@@ -1,18 +1,20 @@
 package Song;
 
 public class Song {
-	String songName;
-	String artist;
-	String album;
-	int year;
+	public String songName;
+	public String artist;
+	public String album;
+	public int year;
 	
 	public Song(String songName, String artist, String album, int year) {
 		this.songName = songName;
 		this.artist = artist;
 		this.album = album;
-		this.year = year;
-		
-		
-	//oeuioeideuid
+		this.year = year;		
+	}
+	
+	public String toString() {
+		return songName + ", " + artist + ", " + album + ", " + year;
 	}
 }
+
