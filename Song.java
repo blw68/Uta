@@ -1,5 +1,7 @@
 package Song;
 
+package Song;
+
 public class Song {
 	public String songName;
 	public String artist;
@@ -15,5 +17,9 @@ public class Song {
 	
 	public String toString() {
 		return songName + ", " + artist + ", " + album + ", " + year;
+	}
+	
+	public String outString() {
+		return songName + "~" + artist + "~" + album + "~" + year;
 	}
 }
