@@ -1,7 +1,5 @@
 package Song;
 
-package Song;
-
 public class Song {
 	public String songName;
 	public String artist;
