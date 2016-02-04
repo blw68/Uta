@@ -1,5 +1,9 @@
 package Control;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,18 +59,69 @@ public class Control {
 	
 	/**
 	 * goes through every song in songList and stores in output.txt
-	 * @param songList list of songs, should always be in abc order
+	 * @param songList list of songs, should be in abc order
+	 * @return true if success, false otherwise
 	 */
-	public static void output(ArrayList<Song> songList) {
+	public static boolean output(ArrayList<Song> songList) {
 		try {
-			PrintWriter out = new PrintWriter(new FileWriter("output.txt", false), true);
+			File o = new File("output.txt");
+			o.createNewFile();
+			
+			PrintWriter out = new PrintWriter(new FileWriter(o, false), true);
 			for (int i = 0; i < songList.size(); i++) {
 				out.println(songList.get(i).outString());
 			}
 			out.close();
+			return true;
 		} catch (IOException e) {
-			System.out.println("IOException in output, no good");
+			System.out.println("Error reading file in Control.output");
+			return false;
+		} catch (Exception e) {
+			System.out.println("Exception in Control.output");
+			return false;
 		}
+	}
+	
+	/**
+	 * takes in emptyList and file (output.txt) and puts lines in file into emptyList
+	 * @param emptyList list of songs, should be empty when this called
+	 * @param o output.txt
+	 * @return true if success, false otherwise
+	 */
+	public static boolean input(ArrayList<Song> emptyList, File o) {
+		String line = null;
+		
+		try {
+			FileReader fileReader = new FileReader(o);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			while ((line = bufferedReader.readLine()) != null) {
+				stickIn1Line(emptyList, line);
+			}
+			
+			bufferedReader.close();
+			return true;
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found in Control.input");
+			return false;
+		} catch (IOException e) {
+			System.out.println("Error reading file in Control.input");
+			return false;
+		} catch (Exception e) {
+			System.out.println("Exception in Control.input");
+			return false;
+		}
+	}
+	
+	/**
+	 * create new Song instance with line (songName~artist~album~year) and add to emptyList
+	 * @param emptyList list of songs, should be empty first time this method called
+	 * @param line (songName~artist~album~year)
+	 */
+	public static void stickIn1Line(ArrayList<Song> emptyList, String line) {
+		String[] strArr = line.split("~");
+		
+		emptyList.add(new Song(strArr[0], strArr[1], strArr[2], Integer.parseInt(strArr[3])));
 	}
 	
 	/**
