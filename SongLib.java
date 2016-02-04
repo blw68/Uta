@@ -23,17 +23,17 @@ public class SongLib extends Application {
 	public void start(Stage primaryStage) {
 		// create an ObservableList 
 	      // from an ArrayList              
-	      obsList = FXCollections.observableArrayList();                         
-	                       
-	      listView.setItems(obsList); 
-	      
-	      // set listener for the items
-	      listView
-	      .getSelectionModel()
-	      .selectedItemProperty()
-	      .addListener(
-	    		  (obs, oldVal, newVal) -> 
-	    		  showItemInputDialog(primaryStage));
+//	      obsList = FXCollections.observableArrayList();                         
+//	                       
+//	      listView.setItems(obsList); 
+//	      
+//	      // set listener for the items
+//	      listView
+//	      .getSelectionModel()
+//	      .selectedItemProperty()
+//	      .addListener(
+//	    		  (obs, oldVal, newVal) -> 
+//	    		  showItemInputDialog(primaryStage));
 
 	}
 
