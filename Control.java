@@ -59,7 +59,7 @@ public class Control {
 	 */
 	public static void output(ArrayList<Song> songList) {
 		try {
-			PrintWriter out = new PrintWriter(new FileWriter("output.txt", true), true);
+			PrintWriter out = new PrintWriter(new FileWriter("output.txt", false), true);
 			for (int i = 0; i < songList.size(); i++) {
 				out.println(songList.get(i).outString());
 			}
