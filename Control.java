@@ -1,5 +1,8 @@
 package Control;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import Song.Song;
@@ -51,15 +54,29 @@ public class Control {
 	}
 	
 	/**
+	 * goes through every song in songList and stores in output.txt
+	 * @param songList list of songs, should always be in abc order
+	 */
+	public static void output(ArrayList<Song> songList) {
+		try {
+			PrintWriter out = new PrintWriter(new FileWriter("output.txt", true), true);
+			for (int i = 0; i < songList.size(); i++) {
+				out.println(songList.get(i).outString());
+			}
+			out.close();
+		} catch (IOException e) {
+			System.out.println("IOException in output, no good");
+		}
+	}
+	
+	/**
 	 * prints out each song in songList, only used for testing purposes
 	 * @param songList list of songs, should always be in abc order
 	 */
-	public static void printList(ArrayList songList) {
+	public static void printList(ArrayList<Song> songList) {
 		for (int i = 0; i < songList.size(); i++) {
 			System.out.println(i + " " + songList.get(i).toString());
 		}
 	}
 
 }
-
-
