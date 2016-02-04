@@ -1,5 +1,6 @@
 package SongLib;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class SongLib extends Application {
 
 	public static void main(String[] args) {		
 		// just used to test add
-		System.out.println("add test");
+		Boolean b;
 		ArrayList<Song> songList = new ArrayList<Song>();
 		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
 		Control.addInAbcOrder(songList, new Song("Ode 2 Joy", "Beethoven", "Ninth Symphony", 1785));
@@ -63,6 +64,14 @@ public class SongLib extends Application {
 		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
 		Control.printList(songList);
 
+		b = Control.output(songList);
+		
+		File o = new File("output3.txt");
+		ArrayList<Song> a2 = new ArrayList<Song>();
+		b = Control.input(a2, o);
+		
+		Control.printList(a2);
+		
 		launch(args);
 	}
 }
