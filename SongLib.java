@@ -46,6 +46,19 @@ public class SongLib extends Application {
 	// 2. Build Objects in Start
 	public void start(Stage primaryStage) {
 		thestage = primaryStage;
+		
+		// can now use the stage in other methods
+		addButton = new Button("Add");
+		editButton = new Button("Edit");
+		deleteButton = new Button("Delete");
+		cancelButton = new Button("Cancel");
+		OKButton = new Button("OK");
+		
+		addButton.setOnAction(e->ButtonClicked(e));
+		editButton.setOnAction(e->ButtonClicked(e));
+		deleteButton.setOnAction(e->ButtonClicked(e));
+		cancelButton.setOnAction(e->ButtonClicked(e));
+		OKButton.setOnAction(e->ButtonClicked(e));
 	}
 
 	private void showItemInputDialog(Stage primaryStage) {
@@ -66,23 +79,23 @@ public class SongLib extends Application {
 
 	public static void main(String[] args) {		
 		// just used to test add
-		Boolean b;
-		ArrayList<Song> songList = new ArrayList<Song>();
-		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
-		Control.addInAbcOrder(songList, new Song("Ode 2 Joy", "Beethoven", "Ninth Symphony", 1785));
-		Control.addInAbcOrder(songList, new Song("Ode 3 Joy", "Beethoven", "Ninth Symphony", 1785));
-		Control.addInAbcOrder(songList, new Song("Ode 1 Joy", "Beethoven", "Ninth Symphony", 1785));
-		Control.addInAbcOrder(songList, new Song("Ode 1 Joy", "Beethoven", "Ninth Symphony", 1785));
-		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
-		Control.printList(songList);
-
-		b = Control.output(songList);
-
-		File o = new File("output3.txt");
-		ArrayList<Song> a2 = new ArrayList<Song>();
-		b = Control.input(a2, o);
-
-		Control.printList(a2);
+//		Boolean b;
+//		ArrayList<Song> songList = new ArrayList<Song>();
+//		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
+//		Control.addInAbcOrder(songList, new Song("Ode 2 Joy", "Beethoven", "Ninth Symphony", 1785));
+//		Control.addInAbcOrder(songList, new Song("Ode 3 Joy", "Beethoven", "Ninth Symphony", 1785));
+//		Control.addInAbcOrder(songList, new Song("Ode 1 Joy", "Beethoven", "Ninth Symphony", 1785));
+//		Control.addInAbcOrder(songList, new Song("Ode 1 Joy", "Beethoven", "Ninth Symphony", 1785));
+//		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
+//		Control.printList(songList);
+//
+//		b = Control.output(songList);
+//
+//		File o = new File("output3.txt");
+//		ArrayList<Song> a2 = new ArrayList<Song>();
+//		b = Control.input(a2, o);
+//
+//		Control.printList(a2);
 
 		launch(args);
 	}
