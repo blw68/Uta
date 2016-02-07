@@ -1,156 +1,216 @@
-package SongLib;
+package app;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import Control.Control;
-import Song.Song;
+import SongLibView.Song;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class SongLib extends Application {
-
 	
-	@FXML         
-	ListView<String> listView;   
+	private static Stage primaryStage;
+	private AnchorPane mainLayout;
+	private static AnchorPane addNewSong, editSong, deleteSong;
 	
-	private ObservableList<String> obsList;   
-
-	// 1. Declare Objects Needed
-	@FXML
-	private Button addButton;
-	@FXML
-	private Button editButton;
-	@FXML
-	private Button deleteButton;
-	@FXML
-	private Button cancelButton;
-	@FXML
-	private Button OKButton;
+	@Override
+	public void start(Stage primaryStage) throws IOException {
+		SongLib.primaryStage = primaryStage;
+		SongLib.primaryStage.setTitle("Song Library");
+		showMainView();
+	}
 	
-	Stage thestage;
-
-	     
-	// 2. Build Objects in Start
-	public void start(Stage primaryStage) {
-		thestage = primaryStage;
+	public void showMainView() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+	    loader.setLocation(getClass().getResource("/SongLibView/SongLibMainScene.fxml"));
+		mainLayout = loader.load();
+		Scene scene = new Scene(mainLayout);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public static void showAddScene() throws IOException {
+		// add button
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(SongLib.class.getResource("/SongLibView/PopUpWindow.fxml"));
+		addNewSong = loader.load();
+		Stage addWindow = new Stage();
+		addWindow.setTitle("Add New Song");
+		addWindow.initModality(Modality.WINDOW_MODAL);
+		addWindow.initOwner(primaryStage);
+		Scene scene = new Scene (addNewSong);
+		addWindow.setScene(scene);
+		addWindow.showAndWait();
 		
-		// can now use the stage in other methods
-		addButton = new Button("Add");
-		editButton = new Button("Edit");
-		deleteButton = new Button("Delete");
-		cancelButton = new Button("Cancel");
-		OKButton = new Button("OK");
-		
-		addButton.setOnAction(e->ButtonClicked(e));
-		editButton.setOnAction(e->ButtonClicked(e));
-		deleteButton.setOnAction(e->ButtonClicked(e));
-		cancelButton.setOnAction(e->ButtonClicked(e));
-		OKButton.setOnAction(e->ButtonClicked(e));
+		// get text field for title
+		//String songName = titlePopup;
+	}
+	
+	public static void showEditScene() throws IOException {
+		// edit button
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(SongLib.class.getResource("/SongLibView/PopUpWindow.fxml"));
+		editSong = loader.load();
+		Stage addWindow = new Stage();
+		addWindow.setTitle("Edit Song");
+		addWindow.initModality(Modality.WINDOW_MODAL);
+		addWindow.initOwner(primaryStage);
+		Scene scene = new Scene (editSong);
+		addWindow.setScene(scene);
+		addWindow.showAndWait();
+	}
+	
+	public static void showDeleteScene() throws IOException {
+		// delete button
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(SongLib.class.getResource("/SongLibView/PopUpWindow.fxml"));
+		deleteSong = loader.load();		// title of pop up
+		Stage addWindow = new Stage();
+		addWindow.setTitle("Delete Song");
+		addWindow.initModality(Modality.WINDOW_MODAL);
+		addWindow.initOwner(primaryStage);
+		Scene scene = new Scene (deleteSong);
+		addWindow.setScene(scene);
+		addWindow.showAndWait();
+		//System.out.println("end of delete scene, activates when hit x");
 	}
 
-	private void showItemInputDialog(Stage primaryStage) {
-		String item = listView.getSelectionModel().getSelectedItem();
-		int index = listView.getSelectionModel().getSelectedIndex();
-
-		TextInputDialog dialog = new TextInputDialog(item);
-		dialog.initOwner(primaryStage); dialog.setTitle("List Item");
-		dialog.setHeaderText("Selected Item (Index: " + index + ")");
-		dialog.setContentText("Enter name: ");
-
-		Optional<String> result = dialog.showAndWait();
-		if (result.isPresent()) { 
-			obsList.set(index, result.get()); 
-		}
-
-	}
-
-	public static void main(String[] args) {		
-		// just used to test add
-//		Boolean b;
-//		ArrayList<Song> songList = new ArrayList<Song>();
-//		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
-//		Control.addInAbcOrder(songList, new Song("Ode 2 Joy", "Beethoven", "Ninth Symphony", 1785));
-//		Control.addInAbcOrder(songList, new Song("Ode 3 Joy", "Beethoven", "Ninth Symphony", 1785));
-//		Control.addInAbcOrder(songList, new Song("Ode 1 Joy", "Beethoven", "Ninth Symphony", 1785));
-//		Control.addInAbcOrder(songList, new Song("Ode 1 Joy", "Beethoven", "Ninth Symphony", 1785));
-//		Control.addInAbcOrder(songList, new Song("Ode to Joy", "Beethoven", "Ninth Symphony", 1785));
-//		Control.printList(songList);
-//
-//		b = Control.output(songList);
-//
-//		File o = new File("output3.txt");
-//		ArrayList<Song> a2 = new ArrayList<Song>();
-//		b = Control.input(a2, o);
-//
-//		Control.printList(a2);
-
+	public static void main(String[] args) {
 		launch(args);
 	}
-
-	//	public static void addSong (ArrayList<Song> songList) {
-	//		Control.addInAbcOrder(songList, newSong);
-	//	}
-
-	// 8. Complete handleButtonAction method
-	@FXML
-	private void handleButtonAction(ActionEvent e) throws IOException {
-		Stage stage = null;
-		Parent root = null;
-		if (e.getSource() == addButton) {
-			stage = (Stage) addButton.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("PopupWindow.fxml"));
-		} else if (e.getSource() == editButton) {
-			stage = (Stage) editButton.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("PopupWindow.fxml"));
-		} else if (e.getSource() == deleteButton){
-			stage = (Stage) deleteButton.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("PopupWindow.fxml"));
-		} else if (e.getSource() == OKButton){
-			stage = (Stage) OKButton.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("SongLib.fxml"));
-		} else if (e.getSource() == cancelButton){
-			stage = (Stage) cancelButton.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("SongLib.fxml"));
-		} else {
-			// shouldn't happen
-			System.out.println("got additional button");
-			System.exit(1);
+	
+	/**
+	 * add newSong in correct spot in songList
+	 * @param songList list of songs, should always be in abc order
+	 * @param newSong Song instance that is about to be added into songList
+	 */
+	public static void addInAbcOrder(ArrayList<Song> songList, Song newSong) {
+		if (songList.isEmpty() == true) {
+			// no songs, add songName here
+			songList.add(newSong);
+			return;
 		}
-
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		
+		if (songList.get(0).songName.compareTo(newSong.songName) > 0) {
+			// songName is even smaller than first element, add at very beginning
+			songList.add(0, newSong);
+			return;
+		}
+		
+		if (songList.get(songList.size() - 1).songName.compareTo(newSong.songName) < 0) {
+			// songName is even bigger than last element, add at very end
+			songList.add(newSong);
+			return;
+		}
+		
+		for (int i = 0; i < songList.size(); i++) {
+			// search for correct location
+			if (songList.get(i).songName.equals(newSong.songName) && songList.get(i).artist.equals(newSong.artist)) {
+				// duplicate, not allowed
+				System.out.println(newSong.songName + " by " + newSong.artist + " is a duplicate");
+				return;
+			}
+			if (songList.get(i).songName.equals(newSong.songName)) {
+				// songName is already in list, but artist is different, so ok, add here
+				songList.add(i, newSong);
+				return;
+			}
+			if (songList.get(i).songName.compareTo(newSong.songName) > 0) {
+				// insert in index i
+				songList.add(i, newSong);
+				return;
+			}
+		}
 	}
 	
-	// 5. Code for ButtonClicked
-	public void ButtonClicked(ActionEvent e) {
-		if (e.getSource() == addButton) {
-			System.out.println("pressed add button");
-		} else if (e.getSource() == editButton) {
-			System.out.println("pressed edit button");
-		} else if (e.getSource() == deleteButton) {
-			System.out.println("presed delete button");
-		} else if (e.getSource() == OKButton) {
-			System.out.println("pressed ok button");
-		} else if (e.getSource() == cancelButton) {
-			System.out.println("cancel button");
-		} else {
-			// shouldn't happen
-			System.out.println("got additional button in SongLib.ButtonClicked");
-			System.exit(1);
+	/**
+	 * goes through every song in songList and stores in output.txt
+	 * @param songList list of songs, should be in abc order
+	 * @return true if success, false otherwise
+	 */
+	public static boolean output(ArrayList<Song> songList) {
+		try {
+			File o = new File("output.txt");
+			o.createNewFile();
+			
+			PrintWriter out = new PrintWriter(new FileWriter(o, false), true);
+			for (int i = 0; i < songList.size(); i++) {
+				out.println(songList.get(i).outString());
+			}
+			out.close();
+			return true;
+		} catch (IOException e) {
+			System.out.println("Error reading file in Control.output");
+			return false;
+		} catch (Exception e) {
+			System.out.println("Exception in Control.output");
+			return false;
+		}
+	}
+	
+	/**
+	 * takes in emptyList and file (output.txt) and puts lines in file into emptyList
+	 * @param emptyList list of songs, should be empty when this called
+	 * @param o output.txt
+	 * @return true if success, false otherwise
+	 */
+	public static boolean input(ArrayList<Song> emptyList, File o) {
+		String line = null;
+		
+		try {
+			FileReader fileReader = new FileReader(o);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			while ((line = bufferedReader.readLine()) != null) {
+				stickIn1Line(emptyList, line);
+			}
+			
+			bufferedReader.close();
+			return true;
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found in Control.input");
+			return false;
+		} catch (IOException e) {
+			System.out.println("Error reading file in Control.input");
+			return false;
+		} catch (Exception e) {
+			System.out.println("Exception in Control.input");
+			return false;
+		}
+	}
+	
+	/**
+	 * create new Song instance with line (songName~artist~album~year) and add to emptyList
+	 * @param emptyList list of songs, should be empty first time this method called
+	 * @param line (songName~artist~album~year)
+	 */
+	public static void stickIn1Line(ArrayList<Song> emptyList, String line) {
+		String[] strArr = line.split("~");
+		
+		emptyList.add(new Song(strArr[0], strArr[1], strArr[2], Integer.parseInt(strArr[3])));
+	}
+	
+	/**
+	 * prints out each song in songList, only used for testing purposes
+	 * @param songList list of songs, should always be in abc order
+	 */
+	public static void printList(ArrayList<Song> songList) {
+		for (int i = 0; i < songList.size(); i++) {
+			System.out.println(i + " " + songList.get(i).toString());
 		}
 	}
 }
