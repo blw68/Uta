@@ -18,7 +18,7 @@
       <TextField layoutX="389.0" layoutY="43.0" prefHeight="31.0" prefWidth="315.0" />
       <TextField layoutX="704.0" layoutY="43.0" prefHeight="31.0" prefWidth="343.0" />
       <TextField layoutX="1047.0" layoutY="43.0" prefHeight="31.0" prefWidth="55.0" />
-      <Button id="cancelButton" layoutX="914.0" layoutY="153.0" mnemonicParsing="false" onAction="#closeWindow" text="Cancel">
+      <Button id="cancelButton" fx:id="cancelButton" layoutX="512.0" layoutY="118.0" mnemonicParsing="false" onAction="#cancelButtonEvent" text="Cancel" />
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
